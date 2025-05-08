@@ -1,0 +1,2 @@
+[console_scripts]
+aligncraft = aligncraft.cli:main

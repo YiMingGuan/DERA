@@ -1,0 +1,131 @@
+
+using_llms: true
+llms_type: qwen2-chat
+prompt_type: qwen2_chat_chinese_translation_template
+
+using_vllm: true
+vllm:
+  llms_model_path: /public/home/chenxuan/models/Qwen1.5-7B-Chat
+  llms_name: Qwen1.5-7B-Chat 
+  tensor_parallel_size: 1
+  swap_space: 4
+  generation:
+    temperature: !!float 1.0
+    top_p: !!float 0.85
+    repetition_penalty: !!float 1.1
+
+dataset:
+  config_path: /public/home/chenxuan/aligncraft/benchmark/config/DBP15K_ZH_EN.yaml
+  type: dbp15k
+  kg1: zh
+  kg2: en
+
+entity_info_method: vanilla
+entity_info:
+  use_name: false
+  use_url: true
+  use_translated_url: false
+  use_relationship: true
+  use_attributes: true
+  use_inverse: true
+  neighbors_use_attr: false
+  head_use_attr: false
+  save_sequence: true
+  over_write: false
+
+jape_test_setting: true
+
+faiss:
+  using_gpu: false
+  index_type: cosine
+
+retrieval:
+  model_path: /public/home/chenxuan/models/bge-base-en-v1.5
+  retriever_name: bge-base-en-v1.5 
+  retrieval_batch_size: 512
+  retrieval_topk: null
+  retrieval_direction: l2r
+  use_training: true
+  hn_mine:
+    model_path: /public/home/chenxuan/models/bge-base-en-v1.5
+    negative_number: 128
+    range_for_sampling: 2-300
+    use_gpu_for_searching: true
+  training:
+    strategy: supervised
+    finetune:
+      learning_rate: !!float 1e-5
+      fp16: true
+      num_train_epochs: 7
+      per_device_train_batch_size: 16
+      dataloader_drop_last: True
+      normlized: True
+      temperature: 0.02
+      query_max_len: 512
+      passage_max_len: 512
+      train_group_size: 64
+      negatives_cross_device: true
+      logging_steps: 10
+      query_instruction_for_retrieval: ""
+      report_to: wandb
+      save_strategy: steps
+      eval_steps: 10
+      save_steps: 10
+      gradient_checkpointing: true
+      deepspeed: /public/home/chenxuan/aligncraft/examples/retrievalea/deepspeed_config/reranker.json
+  retriever_suffix_path: ""
+  multi_gpu_encoding: false
+
+    
+rerank:
+  use_reranker: false
+  model_path: /public/home/chenxuan/models/bge-reranker-base
+  reranker_name: bge-reranker-base
+  hn_mine:
+    model_path: sft_retrieval
+    negative_number: 110
+    range_for_sampling: 2-200
+    use_gpu_for_searching: true
+  training:
+    finetune:
+      fp16: true
+      learning_rate: !!float 6e-5
+      num_train_epochs: 5
+      per_device_train_batch_size: 12
+      per_device_eval_batch_size: 1
+      gradient_accumulation_steps: 8
+      train_group_size: 100
+      max_len: 512
+      weight_decay: 0.01
+      logging_steps: 10
+      eval_steps: 10
+      save_steps: 10
+      gradient_checkpointing: true
+      deepspeed: /public/home/chenxuan/aligncraft/examples/retrievalea/deepspeed_config/reranker.json
+  
+  rerank_topk: 30
+  rerank_batch_size: 4096
+
+llmrerank:
+  use_vllm: true
+  llm_path: /public/home/chenxuan/models/Mistral-7B-Instruct-v0.2
+  instruction: 3
+  use_demonstration: true
+  demonstration: 3
+  vllm:
+    swap_space: 4
+    max_tokens: 512
+  use_openai: false
+  openai:
+    model: gpt-3.5-turbo
+    api_key: sk-0TXBtuIzqcSmy5tW1bE59249E6C04a0387Fd80A46aBfCc62
+    base_url: https://api.xeduapi.com
+  information:
+    name: true
+    attr: true
+    rel: false
+  
+  rerank_input:
+    load_cache: true
+    save_cache: true
+    overwrite: false

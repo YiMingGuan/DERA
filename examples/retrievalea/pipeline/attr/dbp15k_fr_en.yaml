@@ -1,0 +1,103 @@
+
+using_llms: true
+llms_type: mistral-instruct
+
+using_vllm: true
+vllm:
+  llms_model_path: /public/home/chenxuan/models/Mistral-7B-Instruct-v0.2
+  llms_name: Mistral-7B-Instruct-v0.2
+  tensor_parallel_size: 1
+
+dataset:
+  config_path: /public/home/chenxuan/aligncraft/benchmark/config/DBP15K_FR_EN.yaml
+  type: dbp15k
+  kg1: fr
+  kg2: en
+
+entity_info_method: vanilla
+entity_info:
+  use_name: false
+  use_url: false
+  use_translated_url: false
+  use_relationship: false
+  use_attributes: true
+  use_inverse: false
+  neighbors_use_attr: false
+  head_use_attr: false
+  save_sequence: true
+  over_write: false
+
+jape_test_setting: true
+
+faiss:
+  using_gpu: false
+  index_type: cosine
+
+retrieval:
+  model_path: /public/home/chenxuan/models/bge-base-en-v1.5
+  retriever_name: bge-base-en-v1.5 
+  retrieval_batch_size: 512
+  retrieval_topk: null
+  retrieval_direction: l2r
+  use_training: true
+  hn_mine:
+    model_path: /public/home/chenxuan/models/bge-base-en-v1.5
+    negative_number: 64
+    range_for_sampling: 2-200
+    use_gpu_for_searching: true
+  training:
+    strategy: supervised
+    finetune:
+      learning_rate: !!float 1e-5
+      fp16: true
+      num_train_epochs: 3
+      per_device_train_batch_size: 16
+      dataloader_drop_last: True
+      normlized: True
+      temperature: 0.02
+      query_max_len: 512
+      passage_max_len: 512
+      train_group_size: 64
+      negatives_cross_device: true
+      logging_steps: 10
+      query_instruction_for_retrieval: ""
+      report_to: wandb
+      save_strategy: steps
+      eval_steps: 20
+      save_steps: 20
+      gradient_checkpointing: true
+      deepspeed: /public/home/chenxuan/aligncraft/examples/retrievalea/deepspeed_config/reranker.json
+  retriever_suffix_path: ""
+  multi_gpu_encoding: true
+
+    
+rerank:
+  use_reranker: false
+  model_path: /public/home/chenxuan/models/bge-reranker-base
+  reranker_name: bge-reranker-base
+  hn_mine:
+    model_path: sft_retrieval
+    negative_number: 110
+    range_for_sampling: 2-200
+    use_gpu_for_searching: true
+  training:
+    finetune:
+      fp16: true
+      learning_rate: !!float 6e-5
+      num_train_epochs: 50
+      per_device_train_batch_size: 12
+      per_device_eval_batch_size: 1
+      gradient_accumulation_steps: 8
+      train_group_size: 100
+      max_len: 512
+      weight_decay: 0.01
+      logging_steps: 10
+      eval_steps: 10
+      save_steps: 10
+      gradient_checkpointing: true
+      deepspeed: /public/home/chenxuan/aligncraft/examples/retrievalea/deepspeed_config/reranker.json
+  
+  rerank_topk: 10
+  rerank_batch_size: 4096
+
+  

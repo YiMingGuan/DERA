@@ -1,0 +1,17 @@
+./scripts/url_attr/dbp15k_zh_en_zero_shot_qwen32b_awq_chat_attr_num_7.sh
+
+./scripts/url_attr/dbp15k_ja_en_zero_shot_qwen32b_awq_chat_attr_num_7.sh
+
+./scripts/url_attr/dbp15k_ja_en_zero_shot_qwen14b_chat_attr_num_7.sh
+
+./scripts/url_attr/dbp15k_ja_en_zero_shot_qwen7b_chat_attr_num_7.sh
+
+./scripts/url_attr/dbp15k_ja_en_zero_shot_qwen0.5b_chat_attr_num_7.sh
+
+./scripts/url_attr/dbp15k_fr_en_zero_shot_qwen32b_awq_chat_attr_num_7.sh
+
+./scripts/url_attr/dbp15k_fr_en_zero_shot_qwen14b_chat_attr_num_7.sh
+
+./scripts/url_attr/dbp15k_fr_en_zero_shot_qwen7b_chat_attr_num_7.sh
+
+./scripts/url_attr/dbp15k_fr_en_zero_shot_qwen0.5b_chat_attr_num_7.sh
