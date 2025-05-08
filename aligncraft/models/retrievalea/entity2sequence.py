@@ -7,7 +7,6 @@ import yaml
 logger = logging.getLogger(__name__)
 from transformers import AutoTokenizer
 
-# 这一段是我修改的部分
 from openai import OpenAI
 import os
 # ----
@@ -97,7 +96,6 @@ class Entity2Sequence:
         for line in kg_cache_sequence:
             kg_url2sequence[line['url']] = line['sequence']
         
-        # 测试
         # items_list = list(kg_url2sequence.items())
         # first_key, first_value = items_list[0]
         # logging.info(f"kg_url2sequence_example: First key: {first_key}, First value: {first_value}")
@@ -170,13 +168,6 @@ class Entity2Sequence:
 
 
 
-        # 从这里开始修改, 调取了我在utils中写的API调用函数，首先是直接用拼接后的结果做输入
-        # description = generate_entity_description(entities_info[0])
-        # logging.info("*******************")
-        # logging.info(f"description example: {description}")
-        # ----
-
-
         tokenizer = None
         # 从这里开始, 我尝试使用chenxuan在之前写的prompt保持一致性，做新的调用
         entities_info_with_prompt = [
@@ -222,10 +213,10 @@ class Entity2Sequence:
             sequences = [entity_info for entity_info in entities_info]
         
         # 这一部分是调api的代码
-        sequences = [
-            generate_entity_description(prompt)
-            for prompt in entities_info_with_prompt
-        ]
+        # sequences = [
+        #     generate_entity_description(prompt)
+        #     for prompt in entities_info_with_prompt
+        # ]
         # logging.info(f"multiple prompt: {entities_info_with_prompt[:10]}")
         # result_example = generate_entity_description_qwen(entities_info_with_prompt)
 
@@ -244,8 +235,8 @@ class Entity2Sequence:
 
         if self.config['entity_info']['save_sequence']:
             logging.info(f"type1: {new_url2sequence[:2]}")
-            save_cache_file(kg_cache_sequence_file_name, new_url2sequence, True)
-            # save_cache_file(kg_cache_sequence_file_name, new_url2sequence + kg_cache_sequence)
+            # save_cache_file(kg_cache_sequence_file_name, new_url2sequence, True)
+            save_cache_file(kg_cache_sequence_file_name, new_url2sequence + kg_cache_sequence)
         
         return new_url2sequence + kg_cache_sequence
 
@@ -285,13 +276,13 @@ class Entity2Sequence:
                 self.eadata.kg2.ent_ids[id2] for (id1, id2) in self.eadata.test_pairs.items()
             ]
         
-        # kg1_sequence = self.generate_sequence(
-        #     kg=self.eadata.kg1,
-        #     dataset_type=self.config['dataset']['type'],
-        #     kg_name=self.config['dataset']['kg1'],
-        #     entity_info_method=self.config['entity_info_method'],
-        #     url_list=kg1_url_list,
-        # )
+        kg1_sequence = self.generate_sequence(
+            kg=self.eadata.kg1,
+            dataset_type=self.config['dataset']['type'],
+            kg_name=self.config['dataset']['kg1'],
+            entity_info_method=self.config['entity_info_method'],
+            url_list=kg1_url_list,
+        )
         kg2_sequence = self.generate_sequence(
             kg=self.eadata.kg2,
             dataset_type=self.config['dataset']['type'],
@@ -301,14 +292,14 @@ class Entity2Sequence:
         )
         logger.info(f"Successfully generated sequences for testing data.")
         return kg2_sequence
-        # return kg1_sequence, kg2_sequence
+        return kg1_sequence, kg2_sequence
 
     def run(self):
-        # train_kg1_sequence, train_kg2_sequence = self.get_train_sequence()
-        # return train_kg1_sequence, train_kg2_sequence
+        train_kg1_sequence, train_kg2_sequence = self.get_train_sequence()
+        return train_kg1_sequence, train_kg2_sequence
         test_kg2_sequence = self.get_test_sequence()
         return test_kg2_sequence
-        # test_kg1_sequence, test_kg2_sequence = self.get_test_sequence()
-        # return test_kg1_sequence, test_kg2_sequence
+        test_kg1_sequence, test_kg2_sequence = self.get_test_sequence()
+        return test_kg1_sequence, test_kg2_sequence
         
-        # return train_kg1_sequence, train_kg2_sequence, test_kg1_sequence, test_kg2_sequence
+        return train_kg1_sequence, train_kg2_sequence, test_kg1_sequence, test_kg2_sequence
