@@ -9,7 +9,7 @@ DERA is a dense entity retrieval framework for EA, leveraging language models to
 Ensure your Python version is 3.6 or higher. Run the following commands to install the project in development mode:
 
 ```bash
-git clone https://github.com/XChen-Zero/aligncraft.git
+git clone https://github.com/YiMingGuan/DERA.git
 cd aligncraft
 pip install -e .
 ```
