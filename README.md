@@ -20,9 +20,9 @@ pip install -e .
 
 You can download all the required **datasets** from the following link:
 
-📂 **[Download Datasets (Google Drive)](https://drive.google.com/file/d/1UEWVpLEnnnVmf6tofsNS1GwmtjCflKp1/view?usp=sharing)**
+📂 **[Download Datasets ](https://drive.google.com/file/d/1UEWVpLEnnnVmf6tofsNS1GwmtjCflKp1/view?usp=sharing)**
 
-After downloading, extract the contents and place them into the `benchmark/` directory. Make sure the paths in the configuration files point to the correct dataset locations before running the pipeline.
+After downloading, extract the contents and place them into the `benchmark` directory. Make sure the paths in the configuration files point to the correct dataset locations before running the pipeline.
 
 ------
 
