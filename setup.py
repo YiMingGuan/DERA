@@ -41,7 +41,7 @@ setup(
     packages=find_packages(include=['aligncraft', 'aligncraft.*']),
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/XChen-Zero/aligncraft',
+    url='https://github.com/YiMingGuan/DERA.git',
     version='0.1.0',
     zip_safe=False,
 )

@@ -18,16 +18,11 @@ pip install -e .
 
 ## Project Preparation
 
-Before running the full pipeline, make sure to download the fine-tuned models for each stage and place them in the appropriate directories. Here are the model links:
+You can download all the required **datasets** from the following link:
 
-- **Entity Verbalization (EV) Stage Model**:
-   [Download EV model](https://drive.google.com/file/d/1wfWLUMYdjDhcCLPRFIsoVhruVyF8r09X/view?usp=drive_link)
-- **Entity Retrieval (ER) Stage Embedding Model**:
-   [Download ER model](https://drive.google.com/file/d/1lz-vmYW4ZUt30cMxXfPnCMgNrGgIujQX/view?usp=drive_link)
-- **Alignment Reranking (AR) Stage Model**:
-   [Download AR model](https://drive.google.com/file/d/1zSnxn1ydpac622fyr6_ZtixQjJv5TYM1/view?usp=drive_link)
+📂 **[Download Datasets (Google Drive)](https://drive.google.com/file/d/1UEWVpLEnnnVmf6tofsNS1GwmtjCflKp1/view?usp=sharing)**
 
-Place the downloaded models in your model directory, and make sure the configuration YAML files correctly reference these paths.
+After downloading, extract the contents and place them into the `benchmark/` directory. Make sure the paths in the configuration files point to the correct dataset locations before running the pipeline.
 
 ------
 
