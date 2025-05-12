@@ -5,13 +5,13 @@ prompt_type: mistral-instruct
 
 using_vllm: true
 vllm:
-  llms_model_path: /public/home/chenxuan/models/Mistral-7B-Instruct-v0.2
+  llms_model_path: ../../../models/Mistral-7B-Instruct-v0.2
   llms_name: Mistral-7B-Instruct-v0.2
   tensor_parallel_size: 1
   swap_space: 4
 
 dataset:
-  config_path: /public/home/chenxuan/aligncraft/benchmark/config/DBP15K_FR_EN.yaml
+  config_path: ../../../aligncraft/benchmark/config/DBP15K_FR_EN.yaml
   type: dbp15k
   kg1: fr
   kg2: en
@@ -36,14 +36,14 @@ faiss:
   index_type: cosine
 
 retrieval:
-  model_path: /public/home/chenxuan/models/bge-base-en-v1.5
+  model_path: ../../../models/bge-base-en-v1.5
   retriever_name: bge-base-en-v1.5 
   retrieval_batch_size: 512
   retrieval_topk: null
   retrieval_direction: l2r
   use_training: true
   hn_mine:
-    model_path: /public/home/chenxuan/models/bge-base-en-v1.5
+    model_path: ../../../models/bge-base-en-v1.5
     negative_number: 64
     range_for_sampling: 2-200
     use_gpu_for_searching: true
@@ -68,14 +68,14 @@ retrieval:
       eval_steps: 20
       save_steps: 20
       gradient_checkpointing: true
-      deepspeed: /public/home/chenxuan/aligncraft/examples/retrievalea/deepspeed_config/reranker.json
+      deepspeed: ../../../aligncraft/examples/retrievalea/deepspeed_config/reranker.json
   retriever_suffix_path: ""
   multi_gpu_encoding: true
 
     
 rerank:
   use_reranker: false
-  model_path: /public/home/chenxuan/models/bge-reranker-base
+  model_path: ../../../models/bge-reranker-base
   reranker_name: bge-reranker-base
   hn_mine:
     model_path: sft_retrieval
@@ -97,7 +97,7 @@ rerank:
       eval_steps: 10
       save_steps: 10
       gradient_checkpointing: true
-      deepspeed: /public/home/chenxuan/aligncraft/examples/retrievalea/deepspeed_config/reranker.json
+      deepspeed: ../../../aligncraft/examples/retrievalea/deepspeed_config/reranker.json
   
   rerank_topk: 30
   rerank_batch_size: 4096

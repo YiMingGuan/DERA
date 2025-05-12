@@ -1,5 +1,5 @@
 {
-  "_name_or_path": "/public/home/chenxuan/models/Mistral-7B-Instruct-v0.2",
+  "_name_or_path": "models/Mistral-7B-Instruct-v0.2",
   "architectures": [
       "MistralForCausalLM"
   ],

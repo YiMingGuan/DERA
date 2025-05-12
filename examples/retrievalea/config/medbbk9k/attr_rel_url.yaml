@@ -5,7 +5,7 @@ prompt_type: qwen2_chat_med_bbk_9k_vanilla_template
 
 using_vllm: true
 vllm:
-  llms_model_path: /public/home/chenxuan/models/Qwen1.5-7B-Chat
+  llms_model_path: ../../../models/Qwen1.5-7B-Chat
   llms_name: Qwen1.5-7B-Chat 
   tensor_parallel_size: 1
   swap_space: 4
@@ -15,7 +15,7 @@ vllm:
     repetition_penalty: !!float 1.1
 
 dataset:
-  config_path: /public/home/chenxuan/aligncraft/benchmark/config/MEDBBK9K.yaml
+  config_path: ../../../aligncraft/benchmark/config/MEDBBK9K.yaml
   type: medbbk9k
   kg1: med
   kg2: bbk
@@ -40,14 +40,14 @@ faiss:
   index_type: cosine
 
 retrieval:
-  model_path: /public/home/chenxuan/models/bge-base-zh-v1.5
+  model_path: ../../../models/bge-base-zh-v1.5
   retriever_name: bge-base-zh-v1.5
   retrieval_batch_size: 512
   retrieval_topk: null
   retrieval_direction: l2r
   use_training: true
   hn_mine:
-    model_path: /public/home/chenxuan/models/bge-base-zh-v1.5
+    model_path: ../../../models/bge-base-zh-v1.5
     negative_number: 64
     range_for_sampling: 2-200
     use_gpu_for_searching: true
@@ -72,14 +72,14 @@ retrieval:
       eval_steps: 20
       save_steps: 20
       gradient_checkpointing: true
-      deepspeed: /public/home/chenxuan/aligncraft/examples/retrievalea/deepspeed_config/reranker.json
+      deepspeed: ../../../aligncraft/examples/retrievalea/deepspeed_config/reranker.json
   retriever_suffix_path: ""
   multi_gpu_encoding: true
 
     
 rerank:
   use_reranker: false
-  model_path: /public/home/chenxuan/models/bge-reranker-base
+  model_path: ../../../models/bge-reranker-base
   reranker_name: bge-reranker-base
   hn_mine:
     model_path: sft_retrieval
@@ -101,7 +101,7 @@ rerank:
       eval_steps: 10
       save_steps: 10
       gradient_checkpointing: true
-      deepspeed: /public/home/chenxuan/aligncraft/examples/retrievalea/deepspeed_config/reranker.json
+      deepspeed: ../../../aligncraft/examples/retrievalea/deepspeed_config/reranker.json
   
   rerank_topk: 30
   rerank_batch_size: 4096
